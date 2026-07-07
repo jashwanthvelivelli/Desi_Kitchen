@@ -46,7 +46,3 @@ DesiKitchen/
 - Recipe add, view, and search
 - Recipe recommendation using available inventory item names
 - Profile name and password update
-
-## Interview Explanation
-
-The project follows a simple MVC style. Models are written in `models.py`, database setup is in `database.py`, routes and controller logic are in `app.py`, templates are in `templates`, and static files are in `static`. SQLite keeps the project easy to run locally, while SQLAlchemy keeps database operations beginner-friendly.
