@@ -1,0 +1,44 @@
+<!-- inventory.html - Inventory add, edit, search, and delete page. -->
+{% extends "base.html" %}
+{% block content %}
+<h1>Inventory Management</h1>
+<section class="panel">
+    <h2>{{ "Edit Item" if edit_item else "Add Item" }}</h2>
+    <form method="post" action="{{ url_for('edit_inventory', item_id=edit_item.id) if edit_item else url_for('inventory') }}" class="grid-form">
+        <input type="text" name="item_name" placeholder="Item Name" value="{{ edit_item.item_name if edit_item else '' }}" required>
+        <input type="text" name="category" placeholder="Category" value="{{ edit_item.category if edit_item else '' }}" required>
+        <input type="number" name="quantity" placeholder="Quantity" min="0" value="{{ edit_item.quantity if edit_item else '' }}" required>
+        <input type="text" name="unit" placeholder="Unit" value="{{ edit_item.unit if edit_item else '' }}" required>
+        <button type="submit">{{ "Update" if edit_item else "Add" }}</button>
+    </form>
+</section>
+
+<section class="panel">
+    <form method="get" class="search-form">
+        <input type="text" name="search" placeholder="Search item" value="{{ search }}">
+        <button type="submit">Search</button>
+        <a class="button-light" href="{{ url_for('inventory') }}">Clear</a>
+    </form>
+    <table>
+        <thead>
+            <tr><th>Item</th><th>Category</th><th>Quantity</th><th>Unit</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.item_name }}</td>
+                <td>{{ item.category }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.unit }}</td>
+                <td>
+                    <a href="{{ url_for('edit_inventory', item_id=item.id) }}">Edit</a>
+                    <a class="danger-link" href="{{ url_for('delete_inventory', item_id=item.id) }}" data-confirm="Delete this item?">Delete</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="5">No inventory items found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

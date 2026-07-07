@@ -1,0 +1,49 @@
+<!-- dashboard.html - Dashboard cards, notifications, and recommendations. -->
+{% extends "base.html" %}
+{% block content %}
+<h1>Dashboard</h1>
+<div class="cards">
+    <div class="card">
+        <span>Total Inventory Items</span>
+        <strong>{{ total_items }}</strong>
+    </div>
+    <div class="card">
+        <span>Low Stock Items</span>
+        <strong>{{ low_stock|length }}</strong>
+    </div>
+    <div class="card">
+        <span>Shopping List Count</span>
+        <strong>{{ shopping_count }}</strong>
+    </div>
+</div>
+
+<section class="panel">
+    <h2>Notifications</h2>
+    {% if low_stock %}
+    <ul class="notice-list">
+        {% for item in low_stock %}
+        <li>{{ item.item_name }} is low: {{ item.quantity }} {{ item.unit }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No low stock notifications.</p>
+    {% endif %}
+</section>
+
+<section class="panel">
+    <h2>Recipe Recommendations</h2>
+    {% if recipes %}
+    <div class="recipe-grid">
+        {% for recipe in recipes %}
+        <article class="recipe-card">
+            <h3>{{ recipe.recipe_name }}</h3>
+            <p><b>Ingredients:</b> {{ recipe.ingredients }}</p>
+            <p>{{ recipe.steps }}</p>
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No matching recipes found from current inventory.</p>
+    {% endif %}
+</section>
+{% endblock %}

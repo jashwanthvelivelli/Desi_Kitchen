@@ -1,0 +1,30 @@
+<!-- shopping.html - Shopping list page. -->
+{% extends "base.html" %}
+{% block content %}
+<h1>Shopping List</h1>
+<section class="panel">
+    <form method="post" class="inline-form">
+        <input type="text" name="item_name" placeholder="Item to buy" required>
+        <button type="submit">Add Item</button>
+    </form>
+    <table>
+        <thead>
+            <tr><th>Item</th><th>Status</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr class="{{ 'done' if item.purchased else '' }}">
+                <td>{{ item.item_name }}</td>
+                <td>{{ "Purchased" if item.purchased else "Pending" }}</td>
+                <td>
+                    <a href="{{ url_for('toggle_shopping', item_id=item.id) }}">Mark {{ "Pending" if item.purchased else "Purchased" }}</a>
+                    <a class="danger-link" href="{{ url_for('delete_shopping', item_id=item.id) }}" data-confirm="Delete this shopping item?">Delete</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="3">No shopping items found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

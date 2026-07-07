@@ -1,0 +1,39 @@
+<!-- base.html - Common layout for all Desi Kitchen pages. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desi Kitchen</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="topbar">
+        <div class="brand">DESI KITCHEN</div>
+        {% if session.get("user_id") %}
+        <div class="top-user">{{ session.get("user_name") }}</div>
+        {% endif %}
+    </header>
+    <div class="page">
+        {% if session.get("user_id") %}
+        <aside class="sidebar">
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('inventory') }}">Inventory</a>
+            <a href="{{ url_for('shopping') }}">Shopping List</a>
+            <a href="{{ url_for('recipes') }}">Recipes</a>
+            <a href="{{ url_for('profile') }}">Profile</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </aside>
+        {% endif %}
+        <main class="content">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+            <div class="alert {{ category }}">{{ message }}</div>
+            {% endfor %}
+            {% endwith %}
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!-- recipes.html - Recipe add, search, and view page. -->
+{% extends "base.html" %}
+{% block content %}
+<h1>Recipes</h1>
+<section class="panel">
+    <h2>Add Recipe</h2>
+    <form method="post">
+        <label>Recipe Name</label>
+        <input type="text" name="recipe_name" required>
+        <label>Ingredients</label>
+        <textarea name="ingredients" rows="3" placeholder="rice, dal, salt" required></textarea>
+        <label>Preparation Steps</label>
+        <textarea name="steps" rows="4" required></textarea>
+        <button type="submit">Add Recipe</button>
+    </form>
+</section>
+
+<section class="panel">
+    <form method="get" class="search-form">
+        <input type="text" name="search" placeholder="Search recipe" value="{{ search }}">
+        <button type="submit">Search</button>
+        <a class="button-light" href="{{ url_for('recipes') }}">Clear</a>
+    </form>
+    <div class="recipe-grid">
+        {% for recipe in recipes %}
+        <article class="recipe-card">
+            <h3>{{ recipe.recipe_name }}</h3>
+            <p><b>Ingredients:</b> {{ recipe.ingredients }}</p>
+            <p><b>Steps:</b> {{ recipe.steps }}</p>
+        </article>
+        {% else %}
+        <p>No recipes found.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

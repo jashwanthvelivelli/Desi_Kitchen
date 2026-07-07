@@ -1,0 +1,16 @@
+<!-- profile.html - User profile update page. -->
+{% extends "base.html" %}
+{% block content %}
+<h1>Profile</h1>
+<section class="panel small-panel">
+    <form method="post">
+        <label>Name</label>
+        <input type="text" name="name" value="{{ user.name }}" required>
+        <label>Email</label>
+        <input type="email" value="{{ user.email }}" disabled>
+        <label>New Password</label>
+        <input type="password" name="password" placeholder="Leave blank to keep current password">
+        <button type="submit">Update Profile</button>
+    </form>
+</section>
+{% endblock %}
